@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FashionZone - Luxury Fashion Destination</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#0a0a0a;color:#fff;font-family:'Inter',sans-serif;}
+.luxury-font{font-family:'Playfair Display',serif;}
+.hero-gradient{background:linear-gradient(135deg,#000 0%,#1a1a1a 50%,#2d2d2d 100%);border-bottom:2px solid #d4af37;}
+.gold-gradient{background:linear-gradient(135deg,#d4af37 0%,#ffd700 50%,#ffed4e 100%);}
+.gold-text{color:#d4af37;}
+.gold-button{background:linear-gradient(135deg,#d4af37 0%,#ffd700 100%);color:#000;transition:all 0.3s;}
+.gold-button:hover{background:linear-gradient(135deg,#ffd700 0%,#ffed4e 100%);transform:translateY(-2px);box-shadow:0 10px 25px rgba(212,175,55,0.3);}
+.outline-gold-button{border:2px solid #d4af37;color:#d4af37;background:transparent;transition:all 0.3s;}
+.outline-gold-button:hover{background:#d4af37;color:#000;}
+.product-card{transition:all 0.3s;border-radius:12px;overflow:hidden;background:#1a1a1a;border:1px solid #333;}
+.product-card:hover{transform:translateY(-5px);box-shadow:0 20px 40px rgba(212,175,55,0.15);border-color:#d4af37;}
+.category-btn{transition:all 0.3s;background:#1a1a1a;color:#d4af37;border:1px solid #333;}
+.category-btn:hover{transform:scale(1.05);background:#d4af37;color:#000;border-color:#d4af37;}
+.cart-notification{animation:slideIn 0.3s ease-out;background:#d4af37;color:#000;}
+@keyframes slideIn{from{transform:translateX(100%);opacity:0;}to{transform:translateX(0);opacity:1;}}
+.discount-badge{position:absolute;top:10px;right:10px;background:#d4af37;color:#000;padding:4px 8px;border-radius:20px;font-size:12px;font-weight:600;}
+.rating-star{color:#d4af37;}
+.cart-sidebar{transform:translateX(100%);transition:transform 0.3s ease-in-out;background:#1a1a1a;border-left:2px solid #d4af37;}
+.cart-sidebar.open{transform:translateX(0);}
+.cart-overlay{opacity:0;visibility:hidden;transition:all 0.3s ease-in-out;background:rgba(0,0,0,0.8);}
+.cart-overlay.open{opacity:1;visibility:visible;}
+</style>
+</head>
+<body class="bg-black">
+
+<!-- Header -->
+<header class="bg-black shadow-lg border-b border-gray-800 sticky top-0 z-50">
+<div class="container mx-auto px-4 py-4 flex items-center justify-between">
+<div class="flex items-center space-x-3">
+<div class="w-12 h-12 gold-gradient rounded-full flex items-center justify-center shadow-lg">
+<span class="text-black font-bold text-xl luxury-font">FZ</span>
+</div>
+<h1 class="text-2xl font-bold luxury-font gold-text">FashionZone</h1>
+</div>
+<div class="flex-1 mx-8 max-w-2xl">
+<div class="relative">
+<input type="text" placeholder="Search luxury fashion items..." class="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-full text-white placeholder-gray-500 focus:ring-2 focus:ring-yellow-500 search-bar">
+<button class="absolute right-2 top-1/2 transform -translate-y-1/2 gold-gradient text-black p-2 rounded-full w-10 h-10 flex items-center justify-center shadow-lg">
+<i class="fas fa-search"></i>
+</button>
+</div>
+</div>
+<div class="flex items-center space-x-6">
+<button class="nav-link text-gray-400 hover:text-yellow-400 transition-colors"><i class="fas fa-user text-lg"></i><span class="hidden md:inline ml-1">Account</span></button>
+<button class="nav-link text-gray-400 hover:text-yellow-400 transition-colors"><i class="fas fa-heart text-lg"></i><span class="hidden md:inline ml-1">Wishlist</span></button>
+<button id="cart-btn" class="relative nav-link text-gray-400 hover:text-yellow-400 transition-colors">
+<i class="fas fa-shopping-cart text-lg"></i>
+<span class="hidden md:inline ml-1">Cart</span>
+<span id="cart-count" class="absolute -top-2 -right-2 gold-gradient text-black text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold">0</span>
+</button>
+</div>
+</div>
+</header>
+
+<!-- Categories -->
+<nav class="bg-gray-900 border-b border-gray-800">
+<div class="container mx-auto px-4 py-3 flex flex-wrap justify-center gap-3">
+<button class="category-btn px-4 py-2 rounded-full text-sm font-medium">All Categories</button>
+<button class="category-btn px-4 py-2 rounded-full text-sm font-medium">Men's Fashion</button>
+<button class="category-btn px-4 py-2 rounded-full text-sm font-medium">Women's Fashion</button>
+<button class="category-btn px-4 py-2 rounded-full text-sm font-medium">Accessories</button>
+<button class="category-btn px-4 py-2 rounded-full text-sm font-medium">Footwear</button>
+<button class="category-btn px-4 py-2 rounded-full text-sm font-medium">Jewelry</button>
+</div>
+</nav>
+
+<!-- Hero -->
+<section class="hero-gradient text-white py-20">
+<div class="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between">
+<div class="md:w-1/2 mb-8 md:mb-0">
+<h2 class="text-4xl md:text-5xl font-bold mb-4 luxury-font">Luxury Collection 2024</h2>
+<p class="text-xl mb-6 text-gray-300">Discover exclusive fashion with golden elegance</p>
+<div class="flex space-x-4">
+<button class="gold-button px-8 py-3 rounded-full font-semibold text-sm">Shop Collection</button>
+<button class="outline-gold-button px-8 py-3 rounded-full font-semibold text-sm">View Lookbook</button>
+</div>
+</div>
+<div class="md:w-1/2">
+<img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/8dc5eaa7-c4a6-4e4e-9307-75505fb1620c.png" alt="Fashion model" class="rounded-lg shadow-2xl border-2 border-d4af37">
+</div>
+</div>
+</section>
+
+<!-- Featured Products -->
+<section class="py-16 bg-gray-900">
+<div class="container mx-auto px-4">
+<h2 class="text-3xl font-bold text-center luxury-font gold-text mb-2">Featured Luxury</h2>
+<p class="text-center text-gray-400 mb-8">Exquisite pieces for the discerning fashion enthusiast</p>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="featured-products"></div>
+</div>
+</section>
+
+<!-- All Products -->
+<section class="py-16 bg-gray-900">
+<div class="container mx-auto px-4">
+<h2 class="text-3xl font-bold text-center luxury-font gold-text mb-2">All Luxury Products</h2>
+<p class="text-center text-gray-400 mb-8">Discover our complete collection of premium fashion</p>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="all-products"></div>
+</div>
+</section>
+
+<!-- Newsletter -->
+<section class="bg-black py-16 border-t border-gray-800">
+<div class="container mx-auto px-4 text-center">
+<h2 class="text-3xl font-bold luxury-font gold-text mb-4">Join the Luxury Circle</h2>
+<p class="text-xl mb-6 text-gray-400">Subscribe for exclusive access to new collections and special offers</p>
+<div class="max-w-md mx-auto flex">
+<input type="email" placeholder="Enter your email" class="flex-1 px-4 py-3 bg-gray-800 border border-gray-700 rounded-l-lg text-white placeholder-gray-500 focus:outline-none focus:border-d4af37">
+<button class="gold-button px-6 py-3 rounded-r-lg font-semibold">Subscribe</button>
+</div>
+</div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-gray-900 text-white py-16 border-t border-gray-800">
+<div class="container mx-auto px-4">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+<div>
+<h3 class="text-xl font-bold luxury-font gold-text mb-4">FashionZone</h3>
+<p class="text-gray-400 mb-4">Where luxury meets style. Your premier destination for exclusive fashion and accessories.</p>
+<div class="flex space-x-4">
+<a href="#" class="text-gray-400 hover:text-d4af37"><i class="fab fa-facebook-f text-lg"></i></a>
+<a href="#" class="text-gray-400 hover:text-d4af37"><i class="fab fa-twitter text-lg"></i></a>
+<a href="#" class="text-gray-400 hover:text-d4af37"><i class="fab fa-instagram text-lg"></i></a>
+<a href="#" class="text-gray-400 hover:text-d4af37"><i class="fab fa-pinterest text-lg"></i></a>
+</div>
+</div>
+<div>
+<h4 class="text-lg font-semibold gold-text mb-4">Luxury Collections</h4>
+<ul class="space-y-2">
+<li><a href="#" class="text-gray-400 hover:text-d4af37">Men's Premium</a></li>
+<li><a href="#" class="text-gray-400 hover:text-d4af37">Women's Designer</a></li>
+<li><a href="#" class="text-gray-400 hover:text-d4af37">Accessories</a></li>
+<li><a href="#" class="text-gray-400 hover:text-d4af37">Footwear</a></li>
+<li><a href="#" class="text-gray-400 hover:text-d4af37">Jewelry</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-lg font-semibold gold-text mb-4">Client Services</h4>
+<ul class="space-y-2">
+<li><a href="#" class="text-gray-400 hover:text-d4af37">Order Tracking</a></li>
+<li><a href="#" class="text-gray-400 hover:text-d4af37">Shipping & Returns</a></li>
+<li><a href="#" class="text-gray-400 hover:text-d4af37">FAQs</a></li>
+<li><a href="#" class="text-gray-400 hover:text-d4af37">Contact Us</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-lg font-semibold gold-text mb-4">Newsletter</h4>
+<p class="text-gray-400 mb-4">Subscribe to receive exclusive offers and updates</p>
+<div class="flex">
+<input type="email" placeholder="Enter your email" class="flex-1 px-4 py-2 bg-gray-800 border border-gray-700 rounded-l-lg text-white placeholder-gray-500 focus:outline-none focus:border-d4af37">
+<button class="gold-button px-4 py-2 rounded-r-lg font-semibold">Subscribe</button>
+</div>
+</div>
+</div>
+<p class="text-center text-gray-500 mt-8">&copy; 2025 FashionZone. All rights reserved.</p>
+</footer>
+
+<!-- Cart Sidebar -->
+<div id="cart-overlay" class="cart-overlay fixed inset-0 z-40"></div>
+<div id="cart-sidebar" class="cart-sidebar fixed right-0 top-0 h-full w-96 z-50 p-6 overflow-y-auto">
+<h2 class="text-2xl font-bold mb-6 gold-text luxury-font">Shopping Cart</h2>
+<div id="cart-items" class="space-y-4"></div>
+<div class="mt-6 flex justify-between font-semibold text-xl gold-text">
+<span>Total:</span>
+<span id="cart-total">$0.00</span>
+</div>
+<button id="checkout-btn" class="gold-button w-full mt-4 py-3 font-semibold">Checkout</button>
+</div>
+
+<!-- Scripts -->
+<script>
+// Sample products
+const featuredProducts = [
+{id:1,name:"Golden Luxury Jacket",price:299.99,image:"https://source.unsplash.com/400x400/?jacket,fashion"},
+{id:2,name:"Diamond Necklace",price:499.99,image:"https://source.unsplash.com/400x400/?necklace,jewelry"},
+{id:3,name:"Luxury Watch",price:399.99,image:"https://source.unsplash.com/400x400/?watch,luxury"},
+{id:4,name:"Elegant Heels",price:199.99,image:"https://source.unsplash.com/400x400/?heels,fashion"}
+];
+const allProducts = [
+...featuredProducts,
+{id:5,name:"Silk Scarf",price:89.99,image:"https://source.unsplash.com/400x400/?scarf,fashion"},
+{id:6,name:"Leather Boots",price:249.99,image:"https://source.unsplash.com/400x400/?boots,fashion"},
+{id:7,name:"Luxury Handbag",price:349.99,image:"https://source.unsplash.com/400x400/?handbag,fashion"},
+{id:8,name:"Sunglasses",price:149.99,image:"https://source.unsplash.com/400x400/?sunglasses,fashion"}
+];
+
+function renderProducts(containerId, products){
+const container=document.getElementById(containerId);
+container.innerHTML="";
+products.forEach(p=>{
+const div=document.createElement("div");
+div.className="product-card relative p-4";
+div.innerHTML=`
+<img src="${p.image}" alt="${p.name}" class="w-full h-64 object-cover mb-4 rounded-lg">
+<h3 class="text-lg font-semibold mb-2">${p.name}</h3>
+<p class="text-gray-300 mb-4">$${p.price.toFixed(2)}</p>
+<button class="gold-button w-full py-2" onclick="addToCart(${p.id})">Add to Cart</button>
+`;
+container.appendChild(div);
+});
+}
+renderProducts("featured-products",featuredProducts);
+renderProducts("all-products",allProducts);
+
+// Cart functionality
+let cart=[];
+function addToCart(id){
+const product=allProducts.find(p=>p.id===id);
+const cartItem=cart.find(item=>item.id===id);
+if(cartItem) cartItem.qty++;
+else cart.push({...product,qty:1});
+updateCart();
+alert(product.name+" added to cart!");
+}
+function updateCart(){
+const container=document.getElementById("cart-items");
+const count=document.getElementById("cart-count");
+const total=document.getElementById("cart-total");
+container.innerHTML="";
+let sum=0,totalQty=0;
+cart.forEach(item=>{
+sum+=item.price*item.qty;
+totalQty+=item.qty;
+const div=document.createElement("div");
+div.className="flex justify-between items-center bg-gray-800 p-3 rounded";
+div.innerHTML=`
+<div>
+<p class="font-semibold">${item.name}</p>
+<p class="text-gray-400">$${item.price.toFixed(2)} x ${item.qty}</p>
+</div>
+<div class="flex items-center space-x-2">
+<button class="px-2 py-1 bg-gray-700 rounded" onclick="changeQty(${item.id},-1)">-</button>
+<button class="px-2 py-1 bg-gray-700 rounded" onclick="changeQty(${item.id},1)">+</button>
+</div>
+`;
+container.appendChild(div);
+});
+count.textContent=totalQty;
+total.textContent="$"+sum.toFixed(2);
+}
+function changeQty(id,delta){
+const item=cart.find(i=>i.id===id);
+if(!item) return;
+item.qty+=delta;
+if(item.qty<=0) cart=cart.filter(i=>i.id!==id);
+updateCart();
+}
+
+// Cart toggle
+const cartBtn=document.getElementById("cart-btn");
+const cartSidebar=document.getElementById("cart-sidebar");
+const cartOverlay=document.getElementById("cart-overlay");
+cartBtn.addEventListener("click",()=>{
+cartSidebar.classList.add("open");
+cartOverlay.classList.add("open");
+});
+cartOverlay.addEventListener("click",()=>{
+cartSidebar.classList.remove("open");
+cartOverlay.classList.remove("open");
+});
+</script>
+
+</body>
+</html>
